@@ -195,7 +195,7 @@ const Dashboard: FC = () => {
             <ul className="space-y-2">
               {contacts.map((contact, index) => (
                 <li key={index} className="flex items-center text-sm border rounded-full p-2">
-                  <Image src={contact.image} alt="User Icon" width={24} height={24} className="rounded-full mr-2" />
+                  <Image src={contact.image} alt="" width={24} height={24} className="rounded-full mr-2" />
                   <span>{contact.name}</span>
                   <button onClick={() => removeContact(index)} className="ml-auto text-red-600">X</button>
                 </li>
