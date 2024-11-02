@@ -11,6 +11,8 @@ const Dashboard: FC = () => {
     { name: 'Jane Smith', image: '/user-icon2.png' }
   ]);
 
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const addContact = () => {
     setContacts([...contacts, { name: 'New Contact', image: '/user-icon-default.png' }]);
   };
@@ -69,7 +71,7 @@ const Dashboard: FC = () => {
                 <div className="bg-white p-4 rounded-xl shadow-md flex-1">
                   <h3 className="text-lg font-bold mb-2">Select Date</h3>
                   <div className="h-72">
-                    {/* Calendar Component */}
+                    {/* Calendar Component Removed */}
                     <div className="h-full w-full border rounded-lg p-4">
                       <input type="date" className="w-full h-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
                     </div>
@@ -141,20 +143,18 @@ const Dashboard: FC = () => {
             <h2 className="text-base font-bold mb-2">Notifications</h2>
             <ul className="space-y-2">
               <li className="flex items-center text-sm">
-                <span>$1</span>
-                <span className="text-gray-500 ml-auto">$2</span>
+                <span>New user registered.</span>
+                <span className="text-gray-500 ml-auto">59 minutes ago</span>
               </li>
               <li className="flex items-center text-sm">
-                <span>$1</span>
-                <span className="text-gray-500 ml-auto">$2</span>
+                <span>You fixed a bug.</span>
+                <span className="text-gray-500 ml-auto">Just now</span>
               </li>
               <li className="flex items-center text-sm">
-                
                 <span>You fixed a bug.</span>
                 <span className="text-gray-500 ml-auto">12 hours ago</span>
               </li>
               <li className="flex items-center text-sm">
-                
                 <span>Andi Lane subscribed.</span>
                 <span className="text-gray-500 ml-auto">Today, 11:59 AM</span>
               </li>
@@ -162,7 +162,13 @@ const Dashboard: FC = () => {
           </div>
           <div className="bg-white p-4 rounded-xl shadow-md">
             <h2 className="text-base font-bold mb-2">Recent Activities</h2>
-            
+            <div className="h-60 rounded-md overflow-hidden mb-4">
+              {/* Mapa inserido aqui */}
+              <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-46.633308%2C-23.55052%2C-46.625290%2C-23.545428&layer=mapnik"
+                className="w-full h-full border rounded-lg"
+              ></iframe>
+            </div>
             <form className="space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Location</label>
