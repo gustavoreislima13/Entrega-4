@@ -3,14 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Doughnut, Line } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale } from 'chart.js';
 import { FC, useState } from 'react';
-import { FiUserPlus, FiCheckCircle } from 'react-icons/fi';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-
-ChartJS.register(ArcElement, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale);
 
 const Dashboard: FC = () => {
   const [contacts, setContacts] = useState([
@@ -26,43 +19,8 @@ const Dashboard: FC = () => {
     setContacts(contacts.filter((_, i) => i !== index));
   };
   const router = useRouter();
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const doughnutData = {
-    labels: ['United States', 'Canada', 'Mexico', 'Other'],
-    datasets: [
-      {
-        data: [38.6, 22.5, 30.8, 8.1],
-        backgroundColor: ['#5470C6', '#91CC75', '#FAC858', '#EE6666'],
-        borderWidth: 0,
-        cutout: '70%',
-      },
-    ],
-  };
-
-  const lineChartData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-    datasets: [
-      {
-        label: 'This year',
-        data: [50, 80, 60, 90, 120, 150, 180],
-        borderColor: '#5470C6',
-        borderWidth: 2,
-        fill: false,
-        tension: 0.4,
-      },
-      {
-        label: 'Last year',
-        data: [30, 40, 50, 80, 100, 130, 160],
-        borderColor: '#91CC75',
-        borderWidth: 2,
-        borderDash: [5, 5],
-        fill: false,
-        tension: 0.4,
-      },
-    ],
-  };
-
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Main Content */}
@@ -98,9 +56,11 @@ const Dashboard: FC = () => {
           {/* Graph and Analytics */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-white p-4 rounded-xl shadow-md">
-              <h2 className="text-lg font-bold mb-2">Claims Filed Over Time</h2>
-              <div className="h-48">
-                <Line data={lineChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+              <h2 className="text-lg font-bold mb-2">Select Date</h2>
+              <div className="flex justify-center items-center">
+                <div className="h-full w-full">
+                  <input type="date" className="w-auto rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+                </div>
               </div>
             </div>
             <div className="bg-white p-4 rounded-xl shadow-md">
@@ -144,14 +104,13 @@ const Dashboard: FC = () => {
 
           {/* Order List Section */}
           <div className="bg-white p-4 rounded-xl shadow-md mt-4">
-            <h2 className="text-lg font-bold mb-4">Carros</h2>
+            <h2 className="text-lg font-bold mb-4">Order List</h2>
             <table className="min-w-full bg-white text-sm">
               <thead>
                 <tr>
-                  <th className="py-2 text-left">ID</th>
-                  <th className="py-2 text-left">Usuario</th>
-                  <th className="py-2 text-left">Modelo</th>
-                  <th className="py-2 text-left">Address</th>
+                  <th className="py-2 text-left">Order ID</th>
+                  <th className="py-2 text-left">User</th>
+                  <th className="py-2 text-left">Project</th>
                   <th className="py-2 text-left">Date</th>
                   <th className="py-2 text-left">Status</th>
                   <th className="py-2 text-left">Actions</th>
@@ -163,7 +122,6 @@ const Dashboard: FC = () => {
                     <td className="py-2">{orderId}</td>
                     <td className="py-2">User {index + 1}</td>
                     <td className="py-2">Project {index + 1}</td>
-                    <td className="py-2">Address {index + 1}</td>
                     <td className="py-2">Date {index + 1}</td>
                     <td className="py-2">Status {index % 2 === 0 ? 'In Progress' : 'Complete'}</td>
                     <td className="py-2">
@@ -183,22 +141,20 @@ const Dashboard: FC = () => {
             <h2 className="text-base font-bold mb-2">Notifications</h2>
             <ul className="space-y-2">
               <li className="flex items-center text-sm">
-                <FiUserPlus className="mr-2 text-blue-500" />
-                <span>New user registered.</span>
-                <span className="text-gray-500 ml-auto">59 minutes ago</span>
+                <span>$1</span>
+                <span className="text-gray-500 ml-auto">$2</span>
               </li>
               <li className="flex items-center text-sm">
-                <FiCheckCircle className="mr-2 text-green-500" />
-                <span>You fixed a bug.</span>
-                <span className="text-gray-500 ml-auto">Just now</span>
+                <span>$1</span>
+                <span className="text-gray-500 ml-auto">$2</span>
               </li>
               <li className="flex items-center text-sm">
-                <FiCheckCircle className="mr-2 text-green-500" />
+                
                 <span>You fixed a bug.</span>
                 <span className="text-gray-500 ml-auto">12 hours ago</span>
               </li>
               <li className="flex items-center text-sm">
-                <FiUserPlus className="mr-2 text-blue-500" />
+                
                 <span>Andi Lane subscribed.</span>
                 <span className="text-gray-500 ml-auto">Today, 11:59 AM</span>
               </li>
@@ -206,15 +162,7 @@ const Dashboard: FC = () => {
           </div>
           <div className="bg-white p-4 rounded-xl shadow-md">
             <h2 className="text-base font-bold mb-2">Recent Activities</h2>
-            <div className="h-60 rounded-md overflow-hidden mb-4">
-              <MapContainer center={[-23.55052, -46.633308]} zoom={10} className="w-full h-full">
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
-                <Marker position={[-23.55052, -46.633308]}></Marker>
-              </MapContainer>
-            </div>
+            
             <form className="space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Location</label>
@@ -241,7 +189,7 @@ const Dashboard: FC = () => {
             <ul className="space-y-2">
               {contacts.map((contact, index) => (
                 <li key={index} className="flex items-center text-sm border rounded-full p-2">
-                  <Image src={contact.image} alt="" width={24} height={24} className="rounded-full mr-2" />
+                  <Image src={contact.image} alt="User Icon" width={24} height={24} className="rounded-full mr-2" />
                   <span>{contact.name}</span>
                   <button onClick={() => removeContact(index)} className="ml-auto text-red-600">X</button>
                 </li>
